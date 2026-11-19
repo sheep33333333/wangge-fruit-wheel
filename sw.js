@@ -1,6 +1,6 @@
 'use strict';
-const CACHE = 'wangge-fruit-app-v1';
-const FILES = ['./', './index.html', './manifest.webmanifest', './app-icon-192.png', './app-icon-512.png', './apple-touch-icon.png'];
+const CACHE = 'wangge-fruit-app-v2';
+const FILES = ['./', './index.html', './config.js', './records.js', './manifest.webmanifest', './app-icon-192.png', './app-icon-512.png', './apple-touch-icon.png'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(FILES)).then(() => self.skipWaiting()));
 });
@@ -9,6 +9,9 @@ self.addEventListener('activate', event => {
 });
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET' || new URL(event.request.url).origin !== self.location.origin) return;
+  const path = new URL(event.request.url).pathname;
+  // Keep login pages and credentials out of the offline application cache.
+  if (path.endsWith('/admin.html') || path.endsWith('/admin.js')) return;
   if (event.request.mode === 'navigate') {
     event.respondWith(fetch(event.request).then(response => {
       if (!response.ok) throw new Error('Page unavailable');

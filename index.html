@@ -142,6 +142,7 @@
       $('wheel').style.transition=`transform ${duration}ms cubic-bezier(.12,.67,.14,1)`;
       $('wheel').style.transform=`rotate(${rotation}deg)`;
       // A timer also resolves the result if the browser suppresses transition events.
+      window.FruitRecords?.record(fruit.name, selected).catch(() => {});
       spinTimer=setTimeout(()=>finishSpin(fruit),duration+40);
     });
     function drawChoices() {
@@ -182,6 +183,8 @@
     drawWheel();drawHistory();
   })();
   </script>
+  <script src="./config.js"></script>
+  <script src="./records.js"></script>
   <script>
   if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
     window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}));
