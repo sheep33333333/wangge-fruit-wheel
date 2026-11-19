@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f7f8f2">
+  <meta name="description" content="转一下，选出今天想吃的水果。一个轻快、可离线使用的水果转盘。">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="王哥代下单">
+  <meta name="mobile-web-app-capable" content="yes">
+  <title>王哥代下单 · 今天吃什么水果</title>
+  <style>
+    :root{--paper:#f7f8f2;--ink:#253e33;--muted:#879087;--orange:#eb8548;--line:#e6e9df;--green:#2b4b3d;--font:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font);-webkit-tap-highlight-color:transparent}button,input{font:inherit}button{cursor:pointer}button:disabled{cursor:default}button:focus-visible,input:focus-visible{outline:3px solid #edaa71;outline-offset:4px}button{touch-action:manipulation}button,input{ -webkit-appearance:none}button{color:inherit}svg{display:block}body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 85% 20%,#fbead83d,transparent 48%),radial-gradient(ellipse at 10% 80%,#e7eedc70,transparent 48%)}
+    .app{width:min(100% - 44px,420px);margin:auto;padding:27px 0 max(24px,env(safe-area-inset-bottom));min-height:100svh}.topbar{display:flex;align-items:center;justify-content:space-between}.brand{display:flex;align-items:center;gap:9px;font-size:15px;font-weight:700;letter-spacing:1px}.brand-mark{width:29px;height:29px}.edition{font-size:10px;letter-spacing:2px;color:#939b91}.intro{text-align:center;padding-top:38px}.eyebrow{display:inline-flex;gap:7px;align-items:center;color:#778571;font-size:11px;letter-spacing:2px}.eyebrow::before{content:"";height:5px;width:5px;border-radius:50%;background:#91a77a}h1{font-size:37px;line-height:1.48;letter-spacing:1px;margin:12px 0 8px;font-weight:750}h1 em{font-style:normal;color:var(--orange);position:relative;white-space:nowrap}h1 em::after{content:"";position:absolute;left:1px;right:0;bottom:-4px;height:5px;border-top:2px solid #edb28a;border-radius:50%;transform:rotate(-3deg)}.subtitle{font-size:12px;color:var(--muted);letter-spacing:1px;margin:9px 0 0}.wheel-area{position:relative;width:min(100%,352px);aspect-ratio:1;margin:27px auto 21px}.wheel-shadow{position:absolute;bottom:-5px;left:18%;right:18%;height:20px;background:#647c4f14;filter:blur(12px);border-radius:50%}.wheel-rim{position:absolute;inset:6px;border-radius:50%;background:#fff;padding:8px;box-shadow:0 4px 0 #e6e8dc,0 12px 30px #304f3310;border:1px solid #e7e9df}.wheel{width:100%;height:100%;border-radius:50%;will-change:transform}.wheel svg{height:100%;width:100%;overflow:visible}.pointer{position:absolute;top:-3px;left:50%;transform:translateX(-50%);z-index:3;filter:drop-shadow(0 3px 2px #7b422420);width:31px;height:39px}.hub{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:54px;height:54px;background:#fffdf7;border:5px solid #fff;border-radius:50%;box-shadow:0 2px 8px #384b2915;display:grid;place-items:center;pointer-events:none}.hub svg{width:24px;height:24px}.orbit{position:absolute;color:#b1bba2;pointer-events:none;font-size:19px;line-height:1}.orbit.one{top:15%;left:-4px}.orbit.two{bottom:13%;right:-3px;font-size:24px;color:#ddb591}.result{min-height:75px;background:#ffffffa8;border:1px solid #fff;border-radius:18px;display:flex;align-items:center;gap:13px;padding:14px 19px;box-shadow:0 3px 16px #3f503a03}.result-icon{width:43px;height:43px;flex-shrink:0;display:grid;place-items:center;background:#eef2e8;border-radius:13px;font-size:25px}.result-title{font-size:14px;font-weight:650;margin:0;line-height:1.5}.result-description{font-size:11px;color:var(--muted);margin:4px 0 0;line-height:1.5}.result-name{color:var(--orange)}.result.is-new{animation:reveal .25s ease-out}.spin-button{margin-top:13px;width:100%;height:55px;background:var(--green);color:#fffdf5;border:0;border-radius:17px;display:flex;align-items:center;justify-content:center;gap:10px;font-size:15px;font-weight:600;letter-spacing:2px;box-shadow:0 5px 12px #2b4b3d13;transition:transform .15s,background .15s}.spin-button:active{transform:scale(.98);background:#203e30}.spin-button:disabled{background:#65806c}.spin-button svg{width:18px;height:18px}.spin-button.spinning svg{animation:turn .7s linear infinite}.controls{display:flex;align-items:center;justify-content:space-between;padding:19px 2px 0}.selection-button{border:0;background:transparent;display:flex;align-items:center;gap:6px;padding:5px 0;font-size:12px;color:#65735e}.selection-button svg{width:14px;height:14px}.count{font-size:10px;background:#e9eddf;color:#79876b;border-radius:5px;padding:2px 5px;margin-left:2px}.control-note{font-size:10px;color:#a0a79a;letter-spacing:1px}.history{display:flex;align-items:center;gap:8px;margin-top:15px;min-height:27px;flex-wrap:wrap}.history-label{font-size:10px;color:#99a08f;margin-right:2px}.history-item{font-size:10px;background:#edf0e7;color:#748269;padding:5px 9px;border-radius:30px}.footer{text-align:center;font-size:9px;letter-spacing:2px;color:#a3ac99;margin-top:28px}.footer span{display:inline-block;margin:0 7px;color:#c3cab8}.confetti{position:absolute;inset:0;pointer-events:none;overflow:visible}.confetti i{position:absolute;top:50%;left:50%;width:6px;height:9px;background:var(--c);border-radius:2px;animation:confetti .65s ease-out both;transform-origin:center}
+    dialog{border:1px solid #fff;border-radius:27px;background:#f9faf5;padding:0;color:var(--ink);width:min(calc(100% - 28px),420px);max-height:min(85svh,640px);box-shadow:0 24px 90px #1c362b26}dialog::backdrop{background:#1c302b55;backdrop-filter:blur(4px)}.sheet{padding:25px 24px 22px}.sheet-head{display:flex;justify-content:space-between;align-items:center}.sheet h2{font-size:20px;letter-spacing:1px;margin:0}.close{display:grid;place-items:center;background:#edf0e6;border:0;width:30px;height:30px;border-radius:50%;font-size:21px;font-weight:300}.sheet-intro{font-size:12px;color:#89917f;line-height:1.8;margin:9px 0 20px}.choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.fruit-choice{position:relative;min-width:0;border:1px solid #e2e7da;background:#fff;border-radius:14px;padding:13px 3px 11px;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:12px;color:#89917f;transition:background .15s,border-color .15s,transform .15s}.fruit-choice[aria-pressed="true"]{background:#eaf0e2;border-color:#91a27d;color:#3e5936}.fruit-choice:active{transform:scale(.96)}.fruit-choice .emoji{font-size:25px}.fruit-choice .name{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.fruit-choice[aria-pressed="true"]::after{content:"✓";position:absolute;right:6px;top:5px;font-size:9px;color:#6d8657}.custom-row{display:flex;gap:8px;margin-top:17px}.custom-row input{min-width:0;flex:1;width:100%;border:1px solid #e0e6d6;background:#fff;border-radius:11px;padding:11px 12px;font-size:12px;color:var(--ink)}.add-button{background:#e9efdf;border:0;border-radius:11px;padding:0 14px;font-size:12px}.sheet-status{font-size:11px;color:#a27750;min-height:17px;margin:10px 0}.sheet-bottom{display:flex;gap:12px;align-items:center}.reset-button{border:0;background:transparent;color:#8c9582;font-size:11px;padding:10px 3px;white-space:nowrap}.done-button{height:46px;margin:0;flex:1;border-radius:13px;font-size:13px}.no-scroll{overflow:hidden}
+    @keyframes turn{to{transform:rotate(360deg)}}@keyframes reveal{from{transform:translateY(4px);opacity:.4}to{transform:translateY(0);opacity:1}}@keyframes confetti{0%{opacity:0;transform:translate(0,0) rotate(0deg)}15%{opacity:1}100%{opacity:0;transform:translate(var(--x),var(--y)) rotate(var(--r))}}@media(min-width:700px){.app{padding-top:36px}.intro{padding-top:40px}h1{font-size:40px}.wheel-area{margin-top:29px;width:352px}.footer{margin-top:32px}}@media(max-width:360px){.app{width:calc(100% - 34px);padding-top:20px}.intro{padding-top:25px}h1{font-size:32px}.wheel-area{margin-top:22px;margin-bottom:18px}.edition{font-size:9px}.result{padding:12px 14px}.control-note{letter-spacing:0}.sheet{padding:21px 18px}}@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+    [hidden]{display:none!important}
+    @media(max-width:699px){.app{padding-top:22px}.intro{padding-top:28px}h1{font-size:34px;line-height:1.4}.wheel-area{width:min(100%,320px);margin:22px auto 18px}.footer{margin-top:20px}}
+    @media(max-width:699px) and (max-height:740px){.app{padding-top:18px}.intro{padding-top:20px}h1{font-size:30px;line-height:1.35;margin-top:9px}.wheel-area{width:min(100%,280px);margin:18px auto 16px}.result{min-height:68px}.footer{margin-top:15px}}
+    body{padding-top:env(safe-area-inset-top)}
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <div class="brand"><svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="17" r="13" fill="#ed9357"/><circle cx="16" cy="17" r="9.5" fill="none" stroke="#fff5da" stroke-width="1.2"/><path d="M16 7.5v19M6.5 17h19M9.3 10.3l13.4 13.4M9.3 23.7l13.4-13.4" stroke="#fff5da" stroke-width="1.2"/><path d="M16 5C17 1 22 1 25 2c-1 4-5 5-9 3Z" fill="#839769"/></svg>王哥代下单</div>
+      <span class="edition">A LITTLE FRUIT, A GOOD DAY</span>
+    </header>
+    <section class="intro" aria-label="水果转盘">
+      <span class="eyebrow">给今天一点新鲜感</span>
+      <h1>今天，吃点<br>什么<em>水果</em>？</h1>
+      <p class="subtitle">不用纠结，转一下就有答案。</p>
+    </section>
+    <div class="wheel-area" aria-label="水果随机选择转盘">
+      <div class="wheel-shadow"></div><span class="orbit one" aria-hidden="true">✧</span><span class="orbit two" aria-hidden="true">✧</span>
+      <div class="wheel-rim"><div class="wheel" id="wheel" aria-hidden="true"></div></div>
+      <svg class="pointer" viewBox="0 0 32 40" aria-hidden="true"><path d="M3 9a13 13 0 0 1 26 0c0 9-13 28-13 28S3 18 3 9Z" fill="#df7a43"/><circle cx="16" cy="11" r="4" fill="#fff2db"/></svg>
+      <div class="hub" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M16 25C4 20 5 9 13 11c1 0 2 1 3 2 1-1 2-2 3-2 8-2 9 9-3 14Z" fill="#e99560"/><path d="M16 12c-1-5 2-8 7-8-1 5-3 7-7 8Z" fill="#89a373"/><path d="M16 13c0-4-2-5-3-6" fill="none" stroke="#6b8754" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+      <div id="confetti" class="confetti" aria-hidden="true"></div>
+    </div>
+    <section class="result" id="result" aria-live="polite" aria-atomic="true">
+      <div class="result-icon" id="result-icon" aria-hidden="true">✧</div>
+      <div><p class="result-title" id="result-title">今天的快乐，会是哪一颗？</p><p class="result-description" id="result-description">点一下，把选择交给转盘。</p></div>
+    </section>
+    <button class="spin-button" id="spin" type="button"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 10a8 8 0 1 0-1 7M20 4v6h-6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="spin-label">帮我选一个</span></button>
+    <div class="controls"><button class="selection-button" id="edit" type="button"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="7" cy="5" r="2" fill="#f7f8f2" stroke="currentColor"/><circle cx="13" cy="10" r="2" fill="#f7f8f2" stroke="currentColor"/><circle cx="7" cy="15" r="2" fill="#f7f8f2" stroke="currentColor"/></svg>选择水果<span class="count" id="count">8</span></button><span class="control-note">一点随机 · 满分新鲜</span></div>
+    <div class="history" id="history" aria-label="最近选中的水果" hidden></div>
+    <footer class="footer">好好吃水果<span>·</span>好好过今天</footer>
+  </main>
+  <dialog id="picker" aria-labelledby="picker-title"><div class="sheet"><div class="sheet-head"><h2 id="picker-title">想吃的，放进来。</h2><button class="close" id="close" type="button" aria-label="关闭水果选择">×</button></div><p class="sheet-intro">轻点选择或取消，留下今天想吃的水果。<br>至少选 2 种，最多 12 种。</p><div class="choices" id="choices"></div><form class="custom-row" id="custom-form"><input id="custom-input" aria-label="添加自定义水果" maxlength="6" placeholder="还有想吃的？最多 6 个字" autocomplete="off"><button class="add-button" type="submit">添加</button></form><p class="sheet-status" id="sheet-status" role="status"></p><div class="sheet-bottom"><button class="reset-button" id="reset" type="button">恢复默认</button><button class="spin-button done-button" id="done" type="button">选好了</button></div></div></dialog>
+  <script>
+  (() => {
+    'use strict';
+    const defaults = [
+      {name:'草莓',emoji:'🍓',note:'酸甜刚刚好，今天也要甜一点。'},
+      {name:'橙子',emoji:'🍊',note:'剥开一颗橙，把阳光装进今天。'},
+      {name:'西瓜',emoji:'🍉',note:'清甜又多汁，一口就很满足。'},
+      {name:'葡萄',emoji:'🍇',note:'一颗接一颗，小小快乐刚刚好。'},
+      {name:'桃子',emoji:'🍑',note:'咬一口桃香，心情也变柔软。'},
+      {name:'苹果',emoji:'🍎',note:'清脆的一口，简单也很好。'},
+      {name:'香蕉',emoji:'🍌',note:'软糯又香甜，给自己加点能量。'},
+      {name:'蓝莓',emoji:'🫐',note:'一把小蓝莓，一份小确幸。'}
+    ];
+    const colors=['#f5dcd6','#f9e4c6','#e1ebd8','#e8dfef','#f6ded1','#ebead2','#f7edc9','#dfe7ef','#f1e1d8','#dbe9df','#eee4f1','#e8edcc'];
+    const $ = id => document.getElementById(id);
+    let fruits=defaults.map(f=>({...f})), selected=fruits.map(f=>f.name), history=[], rotation=0, spinning=false, spinTimer;
+    try {
+      const saved=JSON.parse(localStorage.getItem('fruit-wheel-v1'));
+      if(saved && Array.isArray(saved.custom)) {
+        saved.custom.slice(0,24).forEach(name=>{if(typeof name==='string' && name.trim() && Array.from(name).length<=6 && !fruits.some(f=>f.name===name))fruits.push({name,emoji:'🍈',note:'就吃这个，给今天添一份新鲜。'});});
+      }
+      if(saved && Array.isArray(saved.selected)) {
+        const valid=[...new Set(saved.selected)].filter(name=>fruits.some(f=>f.name===name));
+        if(valid.length>=2 && valid.length<=12)selected=valid;
+      }
+      if(saved && Array.isArray(saved.history))history=saved.history.filter(name=>typeof name==='string' && Array.from(name).length<=6).slice(0,3);
+    } catch (_) {}
+    const active = () => selected.map(name=>fruits.find(f=>f.name===name));
+    const save = () => {try{localStorage.setItem('fruit-wheel-v1',JSON.stringify({custom:fruits.filter(f=>!defaults.some(d=>d.name===f.name)).map(f=>f.name),selected,history}));}catch(_){}};
+    const svgNS='http://www.w3.org/2000/svg';
+    function svgElement(tag, attrs, content) {
+      const el=document.createElementNS(svgNS,tag);
+      Object.entries(attrs).forEach(([k,v])=>el.setAttribute(k,v));
+      if(content!==undefined)el.textContent=content;
+      return el;
+    }
+    function drawWheel() {
+      const items=active(), size=items.length, step=360/size, radius=160;
+      const svg=svgElement('svg',{viewBox:'0 0 320 320'});
+      items.forEach((fruit,i)=>{
+        const center=-90+i*step, start=(center-step/2)*Math.PI/180, end=(center+step/2)*Math.PI/180;
+        const x1=160+radius*Math.cos(start),y1=160+radius*Math.sin(start),x2=160+radius*Math.cos(end),y2=160+radius*Math.sin(end);
+        svg.append(svgElement('path',{d:`M160 160 L${x1} ${y1} A160 160 0 ${step>180?1:0} 1 ${x2} ${y2} Z`,fill:colors[i%colors.length],stroke:'#ffffffa8','stroke-width':1.3}));
+        const group=svgElement('g',{transform:`rotate(${i*step} 160 160)`});
+        group.append(svgElement('text',{x:160,y:57,'text-anchor':'middle','dominant-baseline':'central','font-size':size>10?24:29,'font-family':'"Apple Color Emoji","Segoe UI Emoji",sans-serif'},fruit.emoji));
+        const text=svgElement('text',{x:160,y:91,'text-anchor':'middle',fill:'#526044','font-size':size>10?10:12,'font-weight':500,'letter-spacing':1},fruit.name);
+        if(fruit.name.length>3){text.setAttribute('textLength',size>10?44:55);text.setAttribute('lengthAdjust','spacingAndGlyphs');}
+        group.append(text);svg.append(group);
+      });
+      $('wheel').replaceChildren(svg);$('count').textContent=size;
+      rotation=0;$('wheel').style.transition='none';$('wheel').style.transform='rotate(0deg)';
+    }
+    function drawHistory() {
+      const container=$('history');container.replaceChildren();container.hidden=history.length===0;
+      if(!history.length)return;
+      const label=document.createElement('span');label.className='history-label';label.textContent='最近转到';container.append(label);
+      history.forEach(name=>{const item=document.createElement('span');item.className='history-item';item.textContent=(fruits.find(f=>f.name===name)?.emoji||'🍈')+' '+name;container.append(item);});
+    }
+    function randomIndex(length) {
+      if(!globalThis.crypto?.getRandomValues)return Math.floor(Math.random()*length);
+      const array=new Uint32Array(1),limit=4294967296-(4294967296%length);
+      do{crypto.getRandomValues(array);}while(array[0]>=limit);
+      return array[0]%length;
+    }
+    function confetti() {
+      if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+      const bits=document.createDocumentFragment();
+      for(let i=0;i<14;i++){const bit=document.createElement('i'),angle=(i/14)*Math.PI*2;bit.style.setProperty('--x',`${Math.cos(angle)*145}px`);bit.style.setProperty('--y',`${Math.sin(angle)*120-35}px`);bit.style.setProperty('--r',`${i*49}deg`);bit.style.setProperty('--c',colors[i%colors.length]);bits.append(bit);}
+      $('confetti').replaceChildren(bits);setTimeout(()=>$('confetti').replaceChildren(),700);
+    }
+    function finishSpin(fruit) {
+      if(!spinning)return;clearTimeout(spinTimer);spinning=false;
+      $('spin').disabled=false;$('edit').disabled=false;$('spin').classList.remove('spinning');$('spin-label').textContent='再转一次';
+      $('result-icon').textContent=fruit.emoji;
+      $('result-title').replaceChildren(document.createTextNode('今天就吃 '));
+      const name=document.createElement('span');name.className='result-name';name.textContent=fruit.name;$('result-title').append(name,document.createTextNode(' 吧！'));
+      $('result-description').textContent=fruit.note;$('result').classList.remove('is-new');void $('result').offsetWidth;$('result').classList.add('is-new');
+      history.unshift(fruit.name);history=history.slice(0,3);drawHistory();save();confetti();
+    }
+    $('spin').addEventListener('click',()=>{
+      if(spinning)return;
+      const items=active(), index=randomIndex(items.length),step=360/items.length,fruit=items[index];
+      spinning=true;$('spin').disabled=true;$('edit').disabled=true;$('spin').classList.add('spinning');$('spin-label').textContent='新鲜答案，马上就好';
+      const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches, duration=reduced?80:1680;
+      // A sector's center is at index * step; its final rotation places it under the top pointer.
+      const target=(360-index*step)%360, current=((rotation%360)+360)%360;
+      rotation+=(reduced?0:1440)+(target-current+360)%360;
+      $('wheel').style.transition=`transform ${duration}ms cubic-bezier(.12,.67,.14,1)`;
+      $('wheel').style.transform=`rotate(${rotation}deg)`;
+      // A timer also resolves the result if the browser suppresses transition events.
+      spinTimer=setTimeout(()=>finishSpin(fruit),duration+40);
+    });
+    function drawChoices() {
+      $('choices').replaceChildren();
+      fruits.forEach(fruit=>{
+        const button=document.createElement('button');button.type='button';button.className='fruit-choice';button.setAttribute('aria-pressed',String(selected.includes(fruit.name)));
+        const emoji=document.createElement('span');emoji.className='emoji';emoji.textContent=fruit.emoji;emoji.setAttribute('aria-hidden','true');
+        const label=document.createElement('span');label.className='name';label.textContent=fruit.name;button.append(emoji,label);
+        button.addEventListener('click',()=>{
+          if(selected.includes(fruit.name)){
+            if(selected.length<=2){$('sheet-status').textContent='再留一种吧，至少要有 2 种水果。';return;}
+            selected=selected.filter(name=>name!==fruit.name);
+          }else{
+            if(selected.length>=12){$('sheet-status').textContent='转盘装满啦，先取消一种再添加。';return;}
+            selected.push(fruit.name);
+          }
+          $('sheet-status').textContent='';drawChoices();drawWheel();save();
+        });$('choices').append(button);
+      });$('done').textContent=`选好了 · ${selected.length} 种水果`;
+    }
+    $('edit').addEventListener('click',()=>{if(spinning)return;drawChoices();$('sheet-status').textContent='';$('picker').showModal();document.body.classList.add('no-scroll');});
+    const closePicker=()=>$('picker').close();$('close').addEventListener('click',closePicker);$('done').addEventListener('click',closePicker);
+    $('picker').addEventListener('close',()=>{document.body.classList.remove('no-scroll');$('edit').focus();});
+    $('picker').addEventListener('click',event=>{if(event.target!==$('picker'))return;const rect=$('picker').getBoundingClientRect();if(event.clientX<rect.left||event.clientX>rect.right||event.clientY<rect.top||event.clientY>rect.bottom)closePicker();});
+    $('custom-form').addEventListener('submit',event=>{
+      event.preventDefault();const name=$('custom-input').value.trim();
+      if(!name){$('sheet-status').textContent='先写下一个水果名字吧。';return;}
+      if(Array.from(name).length>6){$('sheet-status').textContent='名字控制在 6 个字以内哦。';return;}
+      if(selected.includes(name)){$('sheet-status').textContent='这份新鲜已经在转盘里啦。';return;}
+      if(selected.length>=12){$('sheet-status').textContent='最多选 12 种，先取消一种吧。';return;}
+      if(!fruits.some(f=>f.name===name)){
+        if(fruits.length>=32){$('sheet-status').textContent='水果列表已经很丰富啦，可以恢复默认后重新添加。';return;}
+        fruits.push({name,emoji:'🍈',note:'就吃这个，给今天添一份新鲜。'});
+      }
+      selected.push(name);$('custom-input').value='';$('sheet-status').textContent='已添加到转盘。';drawChoices();drawWheel();save();
+    });
+    $('reset').addEventListener('click',()=>{fruits=defaults.map(f=>({...f}));selected=fruits.map(f=>f.name);$('sheet-status').textContent='已恢复默认的 8 种水果。';drawChoices();drawWheel();save();});
+    drawWheel();drawHistory();
+  })();
+  </script>
+  <script>
+  if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+    window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}));
+  }
+  </script>
+</body>
+</html>
